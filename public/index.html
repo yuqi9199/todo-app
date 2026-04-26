@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Todo App</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input { margin: 5px; padding: 5px; }
+    button { padding: 5px 10px; background: black; color: white; border: none; }
+    li { margin: 5px 0; }
+  </style>
+</head>
+<body>
+
+<h1>Todo App</h1>
+
+<h2>ログイン</h2>
+<input id="username" placeholder="ユーザー名">
+<input id="password" type="password" placeholder="パスワード">
+<button onclick="register()">登録</button>
+<button onclick="login()">ログイン</button>
+
+<hr>
+
+<h2>やること</h2>
+<input id="todo" placeholder="やること">
+<button onclick="add()">追加</button>
+
+<ul id="list"></ul>
+
+<script>
+async function register() {
+  await fetch("/register", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      username: username.value,
+      password: password.value
+    })
+  });
+  alert("登録完了");
+}
+
+async function login() {
+  const res = await fetch("/login", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      username: username.value,
+      password: password.value
+    })
+  });
+
+  if(res.ok){
+    alert("ログイン成功");
+    load();
+  } else {
+    alert("失敗");
+  }
+}
+
+async function add() {
+  await fetch("/todos", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      content: todo.value,
+      due_date: ""
+    })
+  });
+  load();
+}
+
+async function load() {
+  const res = await fetch("/todos");
+  const data = await res.json();
+  list.innerHTML = "";
+  data.forEach(t => {
+    const li = document.createElement("li");
+    li.textContent = t.content;
+    list.appendChild(li);
+  });
+}
+</script>
+
+</body>
+</html>
