@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Todo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Todo App</h1>
+
+  <input id="input" placeholder="やること">
+  <button onclick="addTodo()">追加</button>
+
+  <ul id="list"></ul>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+let todos = []
+
+const saved = JSON.parse(localStorage.getItem("todos"))
+if (saved) {
+  todos = saved
+}
+
+function addTodo() {
+  const input = document.getElementById("input")
+  const text = input.value
+
+  if (!text) return
+
+  todos.push(text)
+  localStorage.setItem("todos", JSON.stringify(todos))
+  input.value = ""
+
+  render()
+}
+
+function render() {
+  const list = document.getElementById("list")
+  list.innerHTML = ""
+
+  todos.forEach((todo, index) => {
+    const li = document.createElement("li")
+    li.textContent = todo
+
+    li.onclick = () => {
+      li.classList.toggle("done")
+    }
+
+    const btn = document.createElement("button")
+    btn.textContent = "削除"
+
+    btn.onclick = () => {
+      todos.splice(index, 1)
+      localStorage.setItem("todos", JSON.stringify(todos))
+      render()
+    }
+
+    li.appendChild(btn)
+    list.appendChild(li)
+  })
+}
+
+render()

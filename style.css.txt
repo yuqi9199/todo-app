@@ -1,0 +1,17 @@
+body {
+  font-family: Arial;
+  padding: 20px;
+}
+
+li {
+  margin: 8px 0;
+}
+
+button {
+  margin-left: 10px;
+}
+
+.done {
+  text-decoration: line-through;
+  color: gray;
+}
